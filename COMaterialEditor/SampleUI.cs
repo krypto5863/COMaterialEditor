@@ -1,11 +1,10 @@
-﻿using System.Globalization;
+﻿using System;
 using System.IO;
 using System.Linq;
 using System.Text.RegularExpressions;
 using System.Windows.Forms;
 using BepInEx;
 using COMaterialEditor.MaterialManager;
-using Mono.Cecil.Cil;
 using UnityEngine;
 using Screen = UnityEngine.Screen;
 
@@ -72,7 +71,7 @@ namespace COMaterialEditor
 
 		private static readonly string ExportPath = Paths.GameRootPath + "\\COME_Overlay Exports";
 		private static readonly OpenFileDialog OpenFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath };
-		private static readonly OpenFileDialog SaveFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath };
+		//private static readonly OpenFileDialog SaveFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath };
 
 		internal static void DrawUi()
 		{
@@ -318,7 +317,7 @@ namespace COMaterialEditor
 
 			GUILayout.EndVertical();
 
-			if (originalVal != floatVal)
+			if (Math.Abs(originalVal - floatVal) > 0.00001f)
 			{
 				mat.AddOrUpdateFloatMod(property, floatVal);
 			}

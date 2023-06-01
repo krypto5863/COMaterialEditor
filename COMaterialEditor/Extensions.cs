@@ -7,6 +7,7 @@ namespace COMaterialEditor
 	public static class Extensions
 	{
 		internal static readonly string[] TextureProperties = {
+			"_RenderTex",
 			"_MainTex",
 			"_ShadowTex",
 			"_OutlineTex",
@@ -27,7 +28,8 @@ namespace COMaterialEditor
 			"_Shininess",
 			"_RimPower",
 			"_RimShift",
-			"_Cutoff"
+			"_Cutoff",
+			"_FloatValue1"
 		};
 
 		public static int GetMaterialIndex(this TBodySkin tBodySkin, Material material)

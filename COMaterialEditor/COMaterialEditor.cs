@@ -23,14 +23,14 @@ namespace COMaterialEditor
 	[BepInDependency("org.bepinex.plugins.unityinjectorloader", BepInDependency.DependencyFlags.SoftDependency)]
 	public class CoMaterialEditor : BaseUnityPlugin
 	{
-		//static saving of the main __instance. Instance makes it easier to run stuff like coroutines from static methods or accessing non-static vars.
+		//static saving of the main __instance. Instance makes it easier to run stuff like co-routines from static methods or accessing non-static vars.
 		internal static CoMaterialEditor Instance;
 
 		//Static var for the logger so you can log from other classes.
 		internal static ManualLogSource PluginLogger => Instance.Logger;
 
 		//Config entry variable. You set your configs to this.
-		private static ConfigEntry<bool> _uiUseHotkey;
+		private static ConfigEntry<bool> _uiUseHotKey;
 		private static ConfigEntry<KeyboardShortcut> _uiToggleConfig;
 		
 
@@ -47,7 +47,7 @@ namespace COMaterialEditor
 			Instance = this;
 
 			//Binds the configuration. In other words it sets your ConfigEntry var to your config setup.
-			_uiUseHotkey = Config.Bind("General", "Use Keyboard Shortcut", false, "Allows you to use a keyboard shortcut (set below) to toggle the UI.");
+			_uiUseHotKey = Config.Bind("General", "Use Keyboard Shortcut", false, "Allows you to use a keyboard shortcut (set below) to toggle the UI.");
 			_uiToggleConfig = Config.Bind("General", "Toggle UI", new KeyboardShortcut(KeyCode.C, KeyCode.LeftAlt), "It toggles the UI. It's not rocket science.");
 
 			//Installs the patches in the COMaterialEditor class.
@@ -78,7 +78,7 @@ namespace COMaterialEditor
 
 		private void Update()
 		{
-			if (_uiUseHotkey.Value && _uiToggleConfig.Value.IsDown())
+			if (_uiUseHotKey.Value && _uiToggleConfig.Value.IsDown())
 			{
 				DrawGui = !DrawGui;
 			}
