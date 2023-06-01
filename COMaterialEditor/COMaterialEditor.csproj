@@ -89,7 +89,6 @@
     <Compile Include="COMaterialEditor.cs" />
     <Compile Include="MaterialManager\MaterialMods.cs" />
     <Compile Include="MaterialManager\MaterialTracker.cs" />
-    <None Include="NPRHooks.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SampleUI.cs" />
     <Compile Include="SerializeManager.cs" />
