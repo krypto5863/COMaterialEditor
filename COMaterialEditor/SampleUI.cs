@@ -70,7 +70,7 @@ namespace COMaterialEditor
 		private static bool _exportMenu;
 
 		private static readonly string ExportPath = Paths.GameRootPath + "\\COME_Overlay Exports";
-		private static readonly OpenFileDialog OpenFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath };
+		private static readonly OpenFileDialog OpenFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath, CheckFileExists = true};
 		//private static readonly OpenFileDialog SaveFileDialog = new OpenFileDialog { InitialDirectory = Paths.GameRootPath };
 
 		internal static void DrawUi()
@@ -258,10 +258,14 @@ namespace COMaterialEditor
 
 			if (GUILayout.Button("Import"))
 			{
-				OpenFileDialog.ShowDialog();
-				var newTexture = new Texture2D(1, 1);
-				newTexture.LoadImage(File.ReadAllBytes(OpenFileDialog.FileName));
-				mat.AddOrUpdateTextureMod(property, newTexture);
+				var result = OpenFileDialog.ShowDialog();
+
+				if (result == DialogResult.OK)
+				{
+					var newTexture = new Texture2D(1, 1);
+					newTexture.LoadImage(File.ReadAllBytes(OpenFileDialog.FileName));
+					mat.AddOrUpdateTextureMod(property, newTexture);
+				}
 			}
 
 			GUILayout.EndHorizontal();

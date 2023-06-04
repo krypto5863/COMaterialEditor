@@ -128,8 +128,11 @@ namespace COMaterialEditor
 			{
 				//CoMaterialEditor.PluginLogger.LogDebug($"{__instance.name} was cloned from {__0}");
 				MaterialTracker.ReapplyModSwaps(__0);
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("Clone capture hook called!");
+#endif
 			}
-			
+
 			private static Material[] _materialsAboutToInstance;
 			[HarmonyPatch(typeof(Renderer), "materials", MethodType.Getter)]
 			[HarmonyPrefix]
@@ -173,6 +176,10 @@ namespace COMaterialEditor
 				{
 					_materialsAboutToInstance = null;
 				}
+
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("Instancing hook called!");
+#endif
 			}
 			/*
 			[HarmonyPatch(typeof(Renderer), "materials", MethodType.Setter)]
@@ -231,6 +238,10 @@ namespace COMaterialEditor
 				{
 					_materialsAboutToInstance = null;
 				}
+
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("Instancing hook called!");
+#endif
 			}
 			/*
 			[HarmonyPatch(typeof(Renderer), "material", MethodType.Setter)]
@@ -260,12 +271,19 @@ namespace COMaterialEditor
 				{
 					MaterialTracker.UpdateOrAddTrackMaterial(material, __instance);
 				}
+
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("Load hook called!");
+#endif
 			}
 			[HarmonyPatch(typeof(ImportCM), "ReadMaterial")]
 			[HarmonyPostfix]
 			private static void UpdateMaterials(Material __result)
 			{
 				MaterialTracker.UpdateTrackMaterial(__result);
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("ReadMaterialHook");
+#endif
 			}
 			[HarmonyPatch(typeof(TBody), "ChangeTex")]
 			[HarmonyPostfix]
@@ -274,6 +292,9 @@ namespace COMaterialEditor
 				var num = (int)TBody.hashSlotName[__0];
 				var tbodySkin = __instance.goSlot[num];
 				MaterialTracker.UpdateTrackMaterial(tbodySkin, __2, typeof(Texture));
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("ChangeTexHook");
+#endif
 			}
 			[HarmonyPatch(typeof(TBody), "ChangeCol")]
 			[HarmonyPostfix]
@@ -282,12 +303,18 @@ namespace COMaterialEditor
 				var num = (int)TBody.hashSlotName[__0];
 				var tbodySkin = __instance.goSlot[num];
 				MaterialTracker.UpdateTrackMaterial(tbodySkin, __2, typeof(Color));
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("ChangeColHook");
+#endif
 			}
 			[HarmonyPatch(typeof(TBodySkin), "SetMaterialProperty")]
-			[HarmonyPrefix]
+			[HarmonyPostfix]
 			private static void UpdatePropertyChange(ref TBodySkin __instance)
 			{
 				MaterialTracker.UpdateTrackMaterial(__instance);
+#if (DEBUG)
+				CoMaterialEditor.PluginLogger.LogDebug("SetMaterialPropertyHook");
+#endif
 			}
 		}
 	}
